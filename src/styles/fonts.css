@@ -1,0 +1,21 @@
+@layer base {
+    @font-face {
+        font-family: 'SansationRegular';
+        src: url('../fonts/Sansation-Regular.ttf');
+    }
+    
+    @font-face {
+        font-family: 'SansationBold';
+        src: url('../fonts/Sansation-Bold.ttf');
+    }
+    
+    @font-face {
+        font-family: 'SansationItalic';
+        src: url('../fonts/Sansation-Italic.ttf') ;
+    }
+
+    @font-face {
+        font-family: 'SansationLight';
+        src: url('../fonts/Sansation-Light.ttf');
+    }
+}
