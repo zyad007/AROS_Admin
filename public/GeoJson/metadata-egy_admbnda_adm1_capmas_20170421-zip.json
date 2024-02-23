@@ -1,0 +1,15 @@
+{
+    "created": "2017-08-14T15:05:39.852554",
+    "description": "Egypt administrative level 1 (governorates) boundary polygon shapefile.",
+    "format": "SHP",
+    "download_url": "https://data.humdata.org/dataset/b90d81ba-7c7a-4283-9899-827480d80a79/resource/2d81e588-266e-4ea1-a3ae-402da7ea4a44/download/egy_admbnda_adm1_capmas_20170421.zip",
+    "id": "2d81e588-266e-4ea1-a3ae-402da7ea4a44",
+    "last_modified": "2017-08-14T15:05:39.511629",
+    "metadata_modified": "2023-11-08T22:08:01.389185",
+    "microdata": false,
+    "dataset_id": "b90d81ba-7c7a-4283-9899-827480d80a79",
+    "resource_type": "file.upload",
+    "name": "egy_admbnda_adm1_capmas_20170421.zip",
+    "mimetype": null,
+    "size": "1.4M"
+}
