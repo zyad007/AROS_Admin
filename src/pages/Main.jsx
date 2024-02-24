@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Map from '../components/map';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import { Router } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { Routes } from 'react-router-dom';
 
 export default function Main() {
   const [popupInfo, setPopupInfo] = useState(null);
@@ -48,7 +51,8 @@ export default function Main() {
 
   return (
     <div className='flex h-full w-full'>
-      <div className='w-5% m-5'>
+
+      <div className='w-[30%] m-2 border-2 flex justify-center items-center'>
         <select onChange={handleCityChange} value={selectedCity}>
           <option value="">Select a city</option>
           {egyptCities.map((city, index) => (
@@ -56,9 +60,26 @@ export default function Main() {
           ))}
         </select>
       </div>
-      <div className='h-full w-full border border-black border-solid rounded-[25px]'>
-        <Map obstacles={obstacles} setPopupInfo={setPopupInfo} popupInfo={popupInfo} />
+
+      <div className='flex flex-col w-full pb-2 pr-2'>
+          
+        <div className='w-full h-[10%] flex justify-stretch items-stretch space-x-2 text-white'>
+            <div className='select-none bg-[#1A2342] border border-[#101A33] border-b-0 w-full mt-2 rounded-t-md flex justify-center items-center'>
+              Basic Map
+            </div>
+            <div className='select-none bg-[#223066] border border-[#101A33] w-full mt-2 rounded-t-md flex justify-center items-center'>
+              Heat Map
+            </div>
+        </div>
+
+        <div className='w-full h-full border rounded-md border-[#101A33] bg-[#1A2342] p-2 border-t-0 rounded-t-none'>
+          <Routes >
+            <Route index element={<Map obstacles={obstacles} setPopupInfo={setPopupInfo} popupInfo={popupInfo} />} />
+            <Route path='/heat-map' element={<Map obstacles={obstacles} setPopupInfo={setPopupInfo} popupInfo={popupInfo} />} />
+          </Routes>
+        </div>
       </div>
+
     </div>
   );
 };

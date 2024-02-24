@@ -14,7 +14,7 @@ export default function Map({ obstacles, setPopupInfo, popupInfo }) {
             type: 'geojson',
             data: '../../public/metadata-egy_admbnda_adm1_capmas_20170421-zip.geojson'
           });
-  
+
           map.addLayer({
             'id': 'egypt_cities',
             'type': 'fill',
@@ -25,7 +25,7 @@ export default function Map({ obstacles, setPopupInfo, popupInfo }) {
               'fill-opacity': 0.8
             }
           });
-  
+
           map.addLayer({
             'id': 'outline',
             'type': 'line',
@@ -37,7 +37,7 @@ export default function Map({ obstacles, setPopupInfo, popupInfo }) {
             }
           });
         });
-      }  catch (error) {
+      } catch (error) {
         console.error('Error loading GeoJSON data:', error);
       }
     }
@@ -58,9 +58,9 @@ export default function Map({ obstacles, setPopupInfo, popupInfo }) {
     >
       {obstacles.map((obstacle, index) => (
         <Marker key={index} latitude={obstacle.lat} longitude={obstacle.lon}>
-          <img 
-            src={`Road icons/${obstacle.type}.png`} 
-            alt={obstacle.type} 
+          <img
+            src={`Road icons/${obstacle.type}.png`}
+            alt={obstacle.type}
             className='w-6 h-6 rounded-full'
             onMouseEnter={() => setPopupInfo(obstacle)}
             onMouseLeave={() => setPopupInfo(null)}
