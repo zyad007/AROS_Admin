@@ -1,69 +1,115 @@
-import React from 'react'
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import axios from 'axios';
+import validator from 'validator';
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
-export default function Login() {
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-    const [error, setError] = useState('')
-    const [password, setPassword] = useState('')
-    const [email, setEmail] = useState('')
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
 
-    const nav = useNavigate();
+    if (!email || !password) {
+      setError('Please fill in all the fields');
+    } else if (!validator.isEmail(email)) {
+      setError('Please enter a valid email address');
+    }
 
+    try {
+      const response = await axios.post('http://localhost:3000/login', {
+        email,
+        password
+      });
 
-    return (
-        <div className='flex flex-col justify-start pt-10 items-center h-screen w-screen bg-gradient-to-br from-blue-700 background-animate-1 via-slate-800 to-blue-950 text-white'>
+      const { user, token } = response.data;
 
-            <div className='mb-5 text-xl flex flex-col justify-center items-center'>
-                <img src="../../../images/logo2.png" alt="" className='w-20 mb-6' />
-                <span>Sign in to AROS</span>
+      // Save the token in local storage
+      localStorage.setItem('token', token);
+
+      navigate('/home');
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError('An unknown error occurred. Please try again');
+      }
+    }
+  };
+
+  const handleForgotPasswordClick = () => {
+    alert('This option is not available yet. Please create a new account!');
+  };
+
+  return (
+    <div className="bg-cover bg-center h-screen flex items-center justify-center" style={{ backgroundImage: `url(/background.jpg)` }}>
+      <div className="absolute top-0 left-0 h-full w-full bg-gray-900 bg-opacity-50 bg-blur-md flex justify-center items-center">
+        <div className="p-10 bg-transparent rounded-lg shadow-lg text-white">
+          <div className="h-96 flex justify-center items-center">
+            <div className="w-full max-w-md rounded-lg overflow-hidden">
+              <div className="flex justify-center items-center mb-6">
+                <img src="/logo.png" alt="Logo" className="h-20 w-full mr-2" />
+              </div>
+              <form onSubmit={handleSubmit}>
+                <div className="mb-4">
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Email"
+                    className="w-full placeholder-white bg-transparent border-b border-gray-400 text-white py-2 px-1 focus:border-indigo-500 focus:outline-none input-field"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                    className="w-full placeholder-white bg-transparent border-b border-gray-400 text-white py-2 px-1 focus:border-indigo-500 focus:outline-none input-field"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={handleForgotPasswordClick}
+                    className="text-sm text-gray-300 hover:text-white mt-1 focus:outline-none"
+                  >
+                    Forgot Password?
+                  </button>
+                </div>
+                {error && <p className="text-red-500 text-xs italic box-border m-2">{error}</p>}
+                <div className="mt-6">
+                  <button
+                    type="submit"
+                    style={{
+                      backdropFilter: 'blur(2px)',
+                      transition: 'background-color 0.5s ease',
+                    }}
+                    className="w-full py-3 px-6 border border-white rounded-md shadow-sm text-white bg-transparent hover:bg-indigo-500 hover:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Login
+                  </button>
+                  <div className="w-full h-0.5 bg-white mt-4"></div>
+                </div>
+              </form>
+              <div className="flex justify-center items-center mt-4">
+                <span className="text-white mr-2">Don't have an account?</span>
+                <Link to="/signup" className="text-indigo-500 border-b border-white hover:border-indigo-500">Sign up</Link>
+              </div>
             </div>
-
-            {
-                error &&
-                <div className='relative flex mt-4 border border-red-700 w-80 h-16 justify-center items-center rounded-md bg-opacity-25 bg-red-500 my-5'>
-                    <span className='text-sm'>{'Error'}</span>
-                    <div className='flex justify-center items-center h-3.5 w-3.5 pb-[0.2rem] hover:cursor-pointer hover:bg-slate-700 absolute right-3 font-semibold border border-white'
-                        onClick={() => {
-                        }}
-                    >x</div>
-                </div>
-            }
-
-            <div className='flex flex-col justify-center items-center border w-80  mt-35 p-5 rounded-md bg-secondary-2 '>
-
-                <div className='w-full'>
-                    <div><span className='text-sm ml-1'>Email</span></div>
-                    <input className='text-sm w-full my-1 h-8 py-1 px-2 border border-primary-1 rounded-md bg-secondary-3 ' type='text' name='email' value={email} onChange={(e) => {
-                        setEmail(e.target.value)
-                    }} onKeyPress={(e) => {
-                        if (e.key === 'Enter') {
-                            login()
-                        }
-                    }}></input>
-                </div>
-
-                <div className='w-full my-3'>
-                    <div><span className='text-sm ml-1'>Password</span></div>
-                    <input className='text-sm w-full my-1 h-8 py-1 px-2 border border-primary-1 rounded-md bg-secondary' type='password' name='password' value={password} onChange={(e) => {
-                        setPassword(e.target.value)
-                    }} onKeyPress={(e) => {
-                        if (e.key === 'Enter') {
-                        }
-                    }}></input>
-                </div>
-
-                <div className='w-full'>
-                    <button className="w-full h-9 rounded-md border text-sm bg-primary-2 text-white hover:bg-primary-1">Sign In</button>
-                </div>
-
-            </div>
-
-            <div className='flex mt-4 border w-80 h-16 justify-center items-center rounded-md bg-opacity-5 bg-white'>
-                <span className='text-sm'>Don't Have an Account? <Link text="Signup" onClick={() => nav("/signup")} /></span>
-            </div>
-
+          </div>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
+
+export default Login;

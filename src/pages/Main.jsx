@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
-import Map from '../components/map';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Sidebar from '../components/Sidebar';
+import Map from '../components/Map';
 import DropdownMenu from '../components/DropDownMenu';
+import List from '../components/List';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { Route, Routes } from 'react-router-dom';
 
@@ -10,40 +14,29 @@ export default function Main() {
   const [selectedCity, setSelectedCity] = useState('');
   const [selectedRoad, setSelectedRoad] = useState('');
   const [selectedObstacleType, setSelectedObstacleType] = useState('');
+  const [obstacles, setObstacles] = useState([]);
+  const [view, setView] = useState('map');
+  const navigate = useNavigate();
 
-  const obstacles = [
-    {
-      lat: 26.9,
-      lon: 30.4,
-      type: 'accident',
-      imageURL: 'accident1.jpeg',
-      description: 'Accident occurred here'
-    }, {
-      lat: 27.9,
-      lon: 31.4,
-      type: 'accident',
-      imageURL: 'accident2.jpg',
-      description: 'Accident occurred here'
-    }, {
-      lat: 28.9,
-      lon: 32.4,
-      type: 'Road obstacles',
-      imageURL: 'obstacle1.jpeg',
-      description: 'Road obstacle here'
-    }, {
-      lat: 29.9,
-      lon: 33.4,
-      type: 'Road obstacles',
-      imageURL: 'obstacle2.jpeg',
-      description: 'Road obstacle here'
-    }, {
-      lat: 30.9,
-      lon: 34.4,
-      type: 'traffic jam',
-      imageURL: 'traffic jam.jpg',
-      description: 'Traffic jam here'
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/*');
+    } else {
+      // Fetch obstacles data
+      axios.get('http://localhost:3000/obstacles', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(response => {
+          setObstacles(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching obstacle data:', error);
+        });
     }
-  ];
+  }, [navigate]);
 
   const egyptCities = ['Cairo', 'Alex', 'Sharm', 'Gouna'];
   const regions = ['Region 1', 'Region 2', 'Region 3'];
@@ -73,8 +66,17 @@ export default function Main() {
     console.log('Selected Obstacle Type:', selectedObstacleType);
   };
 
+  const switchToMapView = () => {
+    setView('map');
+  };
+
+  const switchToListView = () => {
+    setView('list');
+  };
+
   return (
     <div className='flex h-full w-full'>
+      <Sidebar />
       <div className='w-[30%] m-2 border-2 flex flex-col justify-center items-center'>
         <DropdownMenu placeholder={'Select Region'} options={regions} value={selectedRegion} onChange={handleRegionChange} />
         <DropdownMenu placeholder={'Select City'} options={egyptCities} value={selectedCity} onChange={handleCityChange} />
@@ -85,24 +87,29 @@ export default function Main() {
         >
           Search
         </button>
-
       </div>
       <div className='flex flex-col w-full pb-2 pr-2'>
         <div className='w-full h-[10%] flex justify-stretch items-stretch space-x-2 text-white'>
-          <div className='select-none bg-[#1A2342] border border-[#101A33] border-b-0 w-full mt-2 rounded-t-md flex justify-center items-center'>
-            Basic Map
-          </div>
-          <div className='select-none bg-[#223066] border border-[#101A33] w-full mt-2 rounded-t-md flex justify-center items-center'>
-            Heat Map
-          </div>
+          <button className='bg-[#1A2342] border border-[#101A33] w-full mt-2 rounded-t-md flex justify-center items-center'
+            onClick={switchToMapView}>
+            Map View
+          </button>
+          <button className='bg-[#223066] border border-[#101A33] w-full mt-2 rounded-t-md flex justify-center items-center'
+            onClick={switchToListView}>
+            List View
+          </button>
         </div>
         <div className='w-full h-full border rounded-md border-[#101A33] bg-[#1A2342] p-2 border-t-0 rounded-t-none'>
-          <Routes>
-            <Route index element={<Map obstacles={obstacles} setPopupInfo={setPopupInfo} popupInfo={popupInfo} />} />
-            <Route path='/heat-map' element={<Map obstacles={obstacles} setPopupInfo={setPopupInfo} popupInfo={popupInfo} />} />
-          </Routes>
+          {view === 'map' ? (
+            <Routes>
+              <Route index element={<Map obstacles={obstacles} setPopupInfo={setPopupInfo} popupInfo={popupInfo} />} />
+              <Route path='/heat-map' element={<Map obstacles={obstacles} setPopupInfo={setPopupInfo} popupInfo={popupInfo} />} />
+            </Routes>
+          ) : (
+            <List obstacles={obstacles} />
+          )}
         </div>
       </div>
     </div>
   );
-}
+};
