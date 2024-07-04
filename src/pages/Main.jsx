@@ -21,7 +21,7 @@ export default function Main() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      navigate('/*');
+      navigate('/');
     } else {
       // Fetch obstacles data
       axios.get('http://localhost:3000/obstacles', {
