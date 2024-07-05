@@ -14,7 +14,6 @@ export default function Main() {
   const [selectedCity, setSelectedCity] = useState('');
   const [selectedRoad, setSelectedRoad] = useState('');
   const [selectedObstacleType, setSelectedObstacleType] = useState('');
-  const [obstacles, setObstacles] = useState([]);
   const [view, setView] = useState('map');
   const navigate = useNavigate();
 
@@ -23,20 +22,40 @@ export default function Main() {
     if (!token) {
       navigate('/');
     } else {
-      // Fetch obstacles data
-      axios.get('http://localhost:3000/obstacles', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-        .then(response => {
-          setObstacles(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching obstacle data:', error);
-        });
+      // // Fetch obstacles data
+      // axios.get('http://localhost:3000/obstacles', {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`
+      //   }
+      // })
+      //   .then(response => {
+      //     setObstacles(response.data);
+      //   })
+      //   .catch(error => {
+      //     console.error('Error fetching obstacle data:', error);
+      //   });
     }
   }, [navigate]);
+
+  const obstacles = [
+    {
+      lat: 26.9,
+      lon: 30.4,
+      type: 'accident',
+      imageURL: 'accident1.jpeg',
+      description: 'Accident occurred here'
+    }, {
+      lat: 27.9,
+      lon: 31.4,
+      description: 'Accident occurred here'
+    }, {
+      lat: 27.9,
+      lon: 31.4,
+      type: 'accident',
+      imageURL: 'accident2.jpg',
+      description: 'Accident occurred here',
+    }
+  ];
 
   const egyptCities = ['Cairo', 'Alex', 'Sharm', 'Gouna'];
   const regions = ['Region 1', 'Region 2', 'Region 3'];
@@ -77,7 +96,7 @@ export default function Main() {
   return (
     <div className='flex h-full w-full'>
       <Sidebar />
-      <div className='w-[30%] m-2 border-2 flex flex-col justify-center items-center'>
+      <div className='w-[20%] m-2 border-2 flex flex-col justify-center items-center'>
         <DropdownMenu placeholder={'Select Region'} options={regions} value={selectedRegion} onChange={handleRegionChange} />
         <DropdownMenu placeholder={'Select City'} options={egyptCities} value={selectedCity} onChange={handleCityChange} />
         <DropdownMenu placeholder={'Select Road'} options={roads} value={selectedRoad} onChange={handleRoadChange} />

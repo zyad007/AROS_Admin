@@ -67,7 +67,6 @@ export default function Map({ obstacles, setPopupInfo, popupInfo }) {
           />
         </Marker>
       ))}
-
       {popupInfo && (
         <Popup
           latitude={popupInfo.lat}
@@ -83,4 +82,4 @@ export default function Map({ obstacles, setPopupInfo, popupInfo }) {
       )}
     </MapGL>
   );
-}
+};
