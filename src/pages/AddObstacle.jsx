@@ -3,7 +3,7 @@ import Sidebar from '../components/Sidebar';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 export default function AddObstacle() {
-  const [view, setView] = useState('add'); // State to manage which view to display
+  const [view, setView] = useState('add'); 
   const [region, setRegion] = useState('');
   const [city, setCity] = useState('');
   const [road, setRoad] = useState('');
