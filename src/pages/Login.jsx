@@ -4,18 +4,16 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    if (!email || !password) {
-      setError('Please fill in all the fields');
-    } else if (!validator.isEmail(email)) {
+    if (!validator.isEmail(email)) {
       setError('Please enter a valid email address');
     }
 
@@ -27,8 +25,9 @@ const Login = () => {
 
       const { user, token } = response.data;
 
-      // Save the token in local storage
+      // Save the userData & token in local storage
       localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
 
       navigate('/home');
     } catch (error) {
@@ -41,16 +40,14 @@ const Login = () => {
   };
 
   const handleForgotPasswordClick = () => {
-    alert('This option is not available yet. Please create a new account!');
+    alert('Please check your mail for the password reset link.');
   };
 
   return (
     <div className="bg-cover bg-center w-screen h-screen flex items-center justify-center" style={{ backgroundImage: `url("../public/background.jpg")` }}>
-
-
       <div className="w-full max-w-md rounded-lg overflow-hidden p-2 shadow-lg backdrop-blur-3xl">
-        <div className='bg-slate-800 rounded-lg p-10'>
-          <div className="flex justify-center items-center mb-6">
+        <div className='bg-transparent opacity-0.5 rounded-lg p-10'>
+          <div className='flex justify-center items-center mb-6'>
             <img src="/logo.png" alt="Logo" className="w-full mr-2" />
           </div>
           <form onSubmit={handleSubmit}>
@@ -97,17 +94,11 @@ const Login = () => {
               >
                 Login
               </button>
-              <div className="w-full h-0.5 bg-white mt-4"></div>
             </div>
           </form>
-          <div className="flex justify-center items-center mt-4">
-            <span className="text-white mr-2">Don't have an account?</span>
-            <Link to="/signup" className="text-indigo-500 border-b border-white hover:border-indigo-500">Sign up</Link>
-          </div>
         </div>
       </div>
     </div>
-
   );
 };
 

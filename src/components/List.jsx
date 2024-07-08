@@ -1,29 +1,33 @@
 import React from 'react';
 
-export default function List({ obstacles }) {
-  // Sort obstacles based on the number of reports in descending order
-  const sortedObstacles = obstacles.sort((a, b) => b.numberOfReports - a.numberOfReports);
-
+const List = ({ obstacles, handleSolve }) => {
   return (
-    <div className="list-container bg-white p-4">
-      <table className="w-full border-collapse">
-        <thead>
+    <div className="overflow-x-auto">
+      <table className="min-w-full divide-y divide-gray-300">
+        <thead className="bg-gray-50">
           <tr>
-            <th className="border p-2">Type</th>
-            <th className="border p-2">Address</th>
-            <th className="border p-2">Number of Reports</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
           </tr>
         </thead>
-        <tbody>
-          {sortedObstacles.map((obstacle, index) => (
-            <tr key={index} className="hover:bg-gray-200">
-              <td className="border p-2">{obstacle.type}</td>
-              <td className="border p-2">{obstacle.address}</td>
-              <td className="border p-2">{obstacle.numberOfReports}</td>
+        <tbody className="bg-white divide-y divide-gray-300">
+          {obstacles.map((obstacle, index) => (
+            <tr key={index}>
+              <td className="px-6 py-4 whitespace-nowrap">{obstacle.type}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{obstacle.lat}, {obstacle.lon}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{obstacle.description}</td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-4 m-2 rounded"
+                  onClick={() => handleSolve(obstacle)}>Solve</button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
   );
-}
+};
+
+export default List;
