@@ -3,7 +3,7 @@ import Sidebar from '../components/Sidebar';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 export default function AddObstacle() {
-  const [view, setView] = useState('add'); 
+  const [view, setView] = useState('add');
   const [region, setRegion] = useState('');
   const [city, setCity] = useState('');
   const [road, setRoad] = useState('');
@@ -12,17 +12,17 @@ export default function AddObstacle() {
     {
       id: 1,
       type: 'accident',
-      region: 'USA',
-      city: 'California',
-      road: 'Main St',
+      region: 'Cairo',
+      city: 'Nasr City',
+      road: 'Abbas El Akkad St',
       solved: false
     },
     {
       id: 2,
       type: 'accident',
-      region: 'USA',
-      city: 'California',
-      road: 'Main St',
+      region: 'Giza',
+      city: '6th of October',
+      road: 'El Mehwar St',
       solved: false
     }
   ]);
@@ -47,6 +47,24 @@ export default function AddObstacle() {
     setObstacles(updatedObstacles);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newObstacle = {
+      id: obstacles.length + 1,
+      type: 'accident',
+      region,
+      city,
+      road,
+      solved: false
+    };
+    setObstacles([...obstacles, newObstacle]);
+    setRegion('');
+    setCity('');
+    setRoad('');
+    setLocationInfo('');
+    setView('list'); // Switch to the list view after submitting
+  };
+
   return (
     <div className='flex h-screen w-screen'>
       <Sidebar />
@@ -69,7 +87,7 @@ export default function AddObstacle() {
           {view === 'add' && (
             <div className='bg-blue-700 flex flex-col justify-center items-center rounded-md p-4 max-w-lg w-full h-[500px] mt-4'>
               <h2 className='text-white text-lg font-bold mb-4'>Add New Obstacle</h2>
-              <form className='w-full'>
+              <form className='w-full' onSubmit={handleSubmit}>
                 <div className='mb-4'>
                   <label className='block text-white mb-1' htmlFor='region'>Region</label>
                   <select
@@ -79,9 +97,11 @@ export default function AddObstacle() {
                     onChange={(e) => setRegion(e.target.value)}
                   >
                     <option value=''>Select a region</option>
-                    <option value='USA'>USA</option>
-                    <option value='Canada'>Canada</option>
-                    <option value='UK'>UK</option>
+                    <option value='Cairo'>Cairo</option>
+                    <option value='Giza'>Giza</option>
+                    <option value='Alexandria'>Alexandria</option>
+                    <option value='Aswan'>Aswan</option>
+                    <option value='Luxor'>Luxor</option>
                   </select>
                 </div>
                 <div className='mb-4'>
@@ -93,9 +113,11 @@ export default function AddObstacle() {
                     onChange={(e) => setCity(e.target.value)}
                   >
                     <option value=''>Select a city</option>
-                    <option value='California'>California</option>
-                    <option value='Ontario'>Ontario</option>
-                    <option value='London'>London</option>
+                    <option value='Nasr City'>Nasr City</option>
+                    <option value='Maadi'>Maadi</option>
+                    <option value='Heliopolis'>Heliopolis</option>
+                    <option value='6th of October'>6th of October</option>
+                    <option value='Zamalek'>Zamalek</option>
                   </select>
                 </div>
                 <div className='mb-4'>

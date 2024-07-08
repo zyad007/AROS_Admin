@@ -9,7 +9,8 @@ export default function Sidebar() {
     { path: '/heat-map', content: 'Heat Map', icon: '/icons/heatmap.png' },
     { path: '/user-tracking', content: 'User Tracking', icon: '/icons/user_tracking.png' },
     { path: '/admin-management', content: 'Admin Management', icon: '/icons/admin.png' },
-    { path: '/add-obstacle', content: 'Add Obstacle', icon: '/icons/add_obstacle.png' }
+    { path: '/add-obstacle', content: 'Add Obstacle', icon: '/icons/add_obstacle.png' },
+    { path: '/add-new-member', content: 'add new member', icon: '/icons/add_new-member.png'}
   ];
 
   return (
@@ -40,4 +41,5 @@ function SidebarLink({ path, content, icon, isActive }) {
       <span className={`text-white font-Sansation_Light_Italic ${isActive ? 'font-bold' : ''}`}>{content}</span>
     </Link>
   );
-}
+};
+

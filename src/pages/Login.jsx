@@ -94,13 +94,8 @@ const Login = () => {
               >
                 Login
               </button>
-              <div className="w-full h-0.5 bg-white mt-4"></div>
             </div>
           </form>
-          <div className="flex justify-center items-center mt-4">
-            <span className="text-white mr-2">Don't have an account?</span>
-            <Link to="/signup" className="text-indigo-500 border-b border-white hover:border-indigo-500">Sign up</Link>
-          </div>
         </div>
       </div>
     </div>

@@ -15,6 +15,7 @@ export default function Main() {
   const [selectedRoad, setSelectedRoad] = useState('');
   const [selectedObstacleType, setSelectedObstacleType] = useState('');
   const [view, setView] = useState('map');
+  const [sortBy, setSortBy] = useState('latest'); // Set default sorting to 'latest'
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export default function Main() {
     if (!token) {
       navigate('/');
     } else {
-      // // Fetch obstacles data
+      // Fetch obstacles data
       // axios.get('http://localhost:3000/obstacles', {
       //   headers: {
       //     Authorization: `Bearer ${token}`
@@ -43,17 +44,26 @@ export default function Main() {
       lon: 30.4,
       type: 'accident',
       imageURL: 'accident1.jpeg',
-      description: 'Accident occurred here'
-    }, {
+      description: 'Accident occurred here',
+      time: '2024-07-08T10:00:00Z',
+      reports: 5
+    },
+    {
       lat: 27.9,
       lon: 31.4,
-      description: 'Accident occurred here'
-    }, {
+      type: 'accident',
+      description: 'Accident occurred here',
+      time: '2024-07-07T08:00:00Z',
+      reports: 2
+    },
+    {
       lat: 27.9,
       lon: 31.4,
       type: 'accident',
       imageURL: 'accident2.jpg',
       description: 'Accident occurred here',
+      time: '2024-07-06T09:00:00Z',
+      reports: 8
     }
   ];
 
@@ -93,6 +103,24 @@ export default function Main() {
     setView('list');
   };
 
+  const handleSortByLatest = () => {
+    setSortBy('latest');
+  };
+
+  const handleSortByReports = () => {
+    setSortBy('reports');
+  };
+
+  const sortedObstacles = () => {
+    if (sortBy === 'latest') {
+      return [...obstacles].sort((a, b) => new Date(b.time) - new Date(a.time));
+    }
+    if (sortBy === 'reports') {
+      return [...obstacles].sort((a, b) => b.reports - a.reports);
+    }
+    return obstacles;
+  };
+
   return (
     <div className='flex h-full w-full'>
       <Sidebar />
@@ -109,12 +137,20 @@ export default function Main() {
       </div>
       <div className='flex flex-col w-full pb-2 pr-2'>
         <div className='w-full h-[10%] flex justify-stretch items-stretch space-x-2 text-white'>
-          <button className='bg-[#1A2342] border border-[#101A33] w-full mt-2 rounded-t-md flex justify-center items-center'
-            onClick={switchToMapView}>
+          <button
+            className={`w-full mt-2 rounded-t-md flex justify-center items-center ${
+              view === 'map' ? 'bg-[#1A2342] border border-[#101A33]' : 'bg-[#223066] border border-[#101A33]'
+            }`}
+            onClick={switchToMapView}
+          >
             Map View
           </button>
-          <button className='bg-[#223066] border border-[#101A33] w-full mt-2 rounded-t-md flex justify-center items-center'
-            onClick={switchToListView}>
+          <button
+            className={`w-full mt-2 rounded-t-md flex justify-center items-center ${
+              view === 'list' ? 'bg-[#1A2342] border border-[#101A33]' : 'bg-[#223066] border border-[#101A33]'
+            }`}
+            onClick={switchToListView}
+          >
             List View
           </button>
         </div>
@@ -125,10 +161,30 @@ export default function Main() {
               <Route path='/heat-map' element={<Map obstacles={obstacles} setPopupInfo={setPopupInfo} popupInfo={popupInfo} />} />
             </Routes>
           ) : (
-            <List obstacles={obstacles} />
+            <>
+              <div className='flex justify-between p-4 space-x-4'>
+                <button
+                  className={`py-2 px-4 w-full rounded font-bold text-white ${
+                    sortBy === 'latest' ? 'bg-green-700' : 'bg-green-500 hover:bg-green-700'
+                  }`}
+                  onClick={handleSortByLatest}
+                >
+                  Sort Obstacles by Latest Time
+                </button>
+                <button
+                  className={`py-2 px-4 w-full rounded font-bold text-white ${
+                    sortBy === 'reports' ? 'bg-yellow-700' : 'bg-yellow-500 hover:bg-yellow-700'
+                  }`}
+                  onClick={handleSortByReports}
+                >
+                  Sort Obstacles by Number of Reports
+                </button>
+              </div>
+              <List obstacles={sortedObstacles()} />
+            </>
           )}
         </div>
       </div>
     </div>
   );
-};
+}
