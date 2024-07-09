@@ -27,6 +27,7 @@ export default function AdminManagement() {
       carID: 'CAR123',
       description: 'Unauthorized access attempt detected.',
       owner: {
+        name: 'John Doe',
         phoneNumber: '+20123456789',
         address: '123 Main St, Cairo'
       },
@@ -39,6 +40,7 @@ export default function AdminManagement() {
       carID: 'CAR456',
       description: 'This vehicle has been blocked due to illegal parking.',
       owner: {
+        name: 'Jane Doe',
         phoneNumber: '+20234567890',
         address: '456 Elm St, Cairo'
       },
@@ -93,7 +95,7 @@ export default function AdminManagement() {
   const handleBlockToggle = () => {
     setSearchResult(prevResult => ({
       ...prevResult,
-      status: prevResult.status === 'active' ? 'blocked' : 'active'
+      status: prevResult.status === 'blocked' ? 'active' : 'blocked'
     }));
   };
 
@@ -257,15 +259,20 @@ export default function AdminManagement() {
                 <div className='bg-gray-200 text-gray-800 p-2 rounded-md mt-2'>
                   <h3 className='text-lg font-bold mb-2'>{searchResult.title}</h3>
                   <p className='mb-2'>{searchResult.description}</p>
-                  <p className='mb-2'>Owner: {searchResult.owner.phoneNumber}</p>
+                  <p className='mb-2'>Name: {searchResult.owner.name}</p>
+                  <p className='mb-2'>Phone: {searchResult.owner.phoneNumber}</p>
                   <p className='mb-2'>Address: {searchResult.owner.address}</p>
                   <p className='mb-2'>Car ID: {searchResult.carID}</p>
-                  <p className='mb-2'>Status: {searchResult.status}</p>
+                  <div className='flex items-center'>
+                    <span>Status:</span>
+                    <span className={`${searchResult.status === 'blocked' ? 'text-red-500' : 'text-green-500'} font-bold ml-2`}>
+                      {searchResult.status === 'blocked' ? 'Blocked' : 'Active'}
+                    </span>
+                  </div>
                   <div className='flex justify-between mt-4'>
                     <button
-                      className={`${
-                        searchResult.status === 'blocked' ? 'bg-red-500' : 'bg-green-500'
-                      } text-white p-2 rounded-md`}
+                      className={`${searchResult.status === 'blocked' ? 'bg-green-500' : 'bg-red-500'
+                        } text-white p-2 rounded-md`}
                       onClick={handleBlockToggle}
                     >
                       {searchResult.status === 'blocked' ? 'Unblock User' : 'Block User'}
@@ -328,4 +335,4 @@ export default function AdminManagement() {
       </div>
     </div>
   );
-}
+};

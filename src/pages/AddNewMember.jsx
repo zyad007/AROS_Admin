@@ -9,7 +9,6 @@ export default function AdminManagement() {
   const [users, setUsers] = useState([]);
   const [admins, setAdmins] = useState([]);
 
-  // Handle opening and closing modals
   const handleAdminRegister = () => {
     setShowAdminForm(true);
     setShowUserForm(false);
@@ -20,9 +19,8 @@ export default function AdminManagement() {
     setShowAdminForm(false);
   };
 
-  // Handle adding new admin
   const handleAddAdmin = (e) => {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault();
     const newAdmin = {
       id: admins.length + 1,
       name: e.target.name.value,
@@ -33,9 +31,8 @@ export default function AdminManagement() {
     setShowAdminForm(false);
   };
 
-  // Handle adding new user
   const handleAddUser = (e) => {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault();
     const newUser = {
       id: users.length + 1,
       name: e.target.name.value,
@@ -48,12 +45,11 @@ export default function AdminManagement() {
     setShowUserForm(false);
   };
 
-  // Modal components to display user and admin data
   const UserDataModal = () => {
     return (
       <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
-        <div className="bg-white p-4 rounded-md max-w-xl w-full">
-          <h2 className="text-xl mb-4 text-center">User Data</h2>
+        <div className="bg-white p-6 rounded-md max-w-3xl w-full">
+          <h2 className="text-2xl mb-4 text-center">User Data</h2>
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-200">
@@ -92,8 +88,8 @@ export default function AdminManagement() {
   const AdminDataModal = () => {
     return (
       <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
-        <div className="bg-white p-4 rounded-md max-w-xl w-full">
-          <h2 className="text-xl mb-4 text-center">Admin Data</h2>
+        <div className="bg-white p-6 rounded-md max-w-3xl w-full">
+          <h2 className="text-2xl mb-2 text-center">Admin Data</h2>
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-200">
@@ -128,34 +124,30 @@ export default function AdminManagement() {
   return (
     <div className="flex h-screen w-screen">
       <Sidebar />
-      <div className="w-full">
+      <div className="w-full p-6">
         <div className="flex flex-grow items-center justify-center">
-          <div className="flex justify-start items-center rounded-md p-4 max-w-lg w-2/6 h-full mt-4 text-white">
-            <div className="flex">
+          <div className="flex justify-start items-center rounded-md p-6 max-w-lg w-full h-full text-white">
+            <div className="flex space-x-4">
               <button
-                className={`bg-gray-800 text-white px-4 py-2 rounded-l ${
-                  showUserForm ? 'bg-green-500' : ''
-                }`}
+                className={`bg-gray-800 text-white px-6 py-2 rounded-lg ${showUserForm ? 'bg-green-500' : ''}`}
                 onClick={handleUserRegister}
               >
                 Register New User
               </button>
               <button
-                className={`bg-gray-800 text-white px-4 py-2 ${
-                  showAdminForm ? 'bg-red-600' : ''
-                }`}
+                className={`bg-gray-800 text-white px-6 py-2 rounded-lg ${showAdminForm ? 'bg-red-600' : ''}`}
                 onClick={handleAdminRegister}
               >
                 Register New Admin
               </button>
               <button
-                className="bg-blue-800 text-white px-4 py-2"
+                className="bg-blue-800 text-white px-6 py-2 rounded-lg"
                 onClick={() => setShowUserDataModal(true)}
               >
                 Show All Users
               </button>
               <button
-                className="bg-blue-800 text-white px-4 py-2 rounded-r"
+                className="bg-blue-800 text-white px-6 py-2 rounded-lg"
                 onClick={() => setShowAdminDataModal(true)}
               >
                 Show All Admins
@@ -164,44 +156,44 @@ export default function AdminManagement() {
           </div>
         </div>
         {showAdminForm && (
-          <div className="flex justify-center align-middle">
-            <div className="bg-blue-900 text-white p-4 mt-10 rounded-md max-w-xl w-4/12">
-              <h2 className="text-xl mb-2 text-center">Admin Registration</h2>
+          <div className="flex justify-center items-center">
+            <div className="bg-white text-black p-6 mt-2 rounded-md max-w-xl w-full shadow-lg">
+              <h2 className="text-2xl mb-4 text-center">Admin Registration</h2>
               <form onSubmit={handleAddAdmin}>
-                <div className="mb-2 flex justify-center">
+                <div className="mb-4">
                   <input
                     type="text"
                     name="name"
-                    placeholder="FULLNAME"
-                    className="bg-gray-800 text-center text-white px-3 py-2 rounded max-w-lg w-full mb-1"
+                    placeholder="Full Name"
+                    className="bg-gray-100 text-center text-black px-4 py-3 rounded-lg w-full"
                   />
                 </div>
-                <div className="mb-2 flex justify-center">
+                <div className="mb-4">
                   <input
                     type="email"
                     name="email"
                     placeholder="Email"
-                    className="bg-gray-800 text-center text-white px-3 py-2 rounded w-full mb-1"
+                    className="bg-gray-100 text-center text-black px-4 py-3 rounded-lg w-full"
                   />
                 </div>
-                <div className="mb-2 flex justify-center">
+                <div className="mb-4">
                   <input
                     type="password"
                     name="password"
-                    placeholder="PASSWORD"
-                    className="bg-gray-800 text-center text-white px-3 py-2 rounded w-full mb-1"
+                    placeholder="Password"
+                    className="bg-gray-100 text-center text-black px-4 py-3 rounded-lg w-full"
                   />
                 </div>
-                <div className="mb-2 flex justify-center">
+                <div className="mb-4">
                   <input
                     type="text"
                     name="phone"
-                    placeholder="PHONE NUMBER"
-                    className="bg-gray-800 text-center text-white px-3 py-2 rounded w-full mb-1"
+                    placeholder="Phone Number"
+                    className="bg-gray-100 text-center text-black px-4 py-3 rounded-lg w-full"
                   />
                 </div>
                 <div className="text-center">
-                  <button type="submit" className="bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded mb-1">
+                  <button type="submit" className="bg-green-500 hover:bg-green-700 text-white px-6 py-3 rounded-lg">
                     Add Admin
                   </button>
                 </div>
@@ -210,52 +202,52 @@ export default function AdminManagement() {
           </div>
         )}
         {showUserForm && (
-          <div className="flex justify-center align-middle">
-            <div className="bg-blue-900 text-white p-4 mt-10 rounded-md max-w-xl w-4/12">
-              <h2 className="text-xl mb-2 text-center">User Registration</h2>
+          <div className="flex justify-center items-center">
+            <div className="bg-white text-black p-6 mt-10 rounded-md max-w-xl w-full shadow-lg">
+              <h2 className="text-2xl mb-4 text-center">User Registration</h2>
               <form onSubmit={handleAddUser}>
-                <div className="mb-2">
+                <div className="mb-4">
                   <input
                     type="text"
                     name="name"
-                    placeholder="FULL NAME"
-                    className="bg-gray-800 text-center text-white px-3 py-2 rounded w-full"
+                    placeholder="Full Name"
+                    className="bg-gray-100 text-center text-black px-4 py-3 rounded-lg w-full"
                   />
                 </div>
-                <div className="mb-2">
+                <div className="mb-4">
                   <input
                     type="text"
                     name="phone"
-                    placeholder="PHONE NUMBER"
-                    className="bg-gray-800 text-center text-white px-3 py-2 rounded w-full"
+                    placeholder="Phone Number"
+                    className="bg-gray-100 text-center text-black px-4 py-3 rounded-lg w-full"
                   />
                 </div>
-                <div className="mb-2">
+                <div className="mb-4">
                   <input
                     type="text"
                     name="address"
-                    placeholder="ADDRESS"
-                    className="bg-gray-800 text-center text-white px-3 py-2 rounded w-full"
+                    placeholder="Address"
+                    className="bg-gray-100 text-center text-black px-4 py-3 rounded-lg w-full"
                   />
                 </div>
-                <div className="mb-2">
+                <div className="mb-4">
                   <input
                     type="text"
                     name="licensePlate"
-                    placeholder="LICENSE PLATE NUMBER"
-                    className="bg-gray-800 text-center text-white px-3 py-2 rounded w-full"
+                    placeholder="License Plate"
+                    className="bg-gray-100 text-center text-black px-4 py-3 rounded-lg w-full"
                   />
                 </div>
-                <div className="mb-2">
+                <div className="mb-4">
                   <input
                     type="text"
-                    name="carId" 
-                    placeholder="CAR ID"
-                    className="bg-gray-800 text-center text-white px-3 py-2 rounded w-full"
+                    name="carId"
+                    placeholder="Car ID"
+                    className="bg-gray-100 text-center text-black px-4 py-3 rounded-lg w-full"
                   />
                 </div>
                 <div className="text-center">
-                  <button type="submit" className="bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded mb-1">
+                  <button type="submit" className="bg-green-500 hover:bg-green-700 text-white px-6 py-3 rounded-lg">
                     Add User
                   </button>
                 </div>
@@ -268,4 +260,4 @@ export default function AdminManagement() {
       </div>
     </div>
   );
-}
+};
