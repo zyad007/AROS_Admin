@@ -1,7 +1,7 @@
 import axios from 'axios';
 import validator from 'validator';
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,6 +15,7 @@ const Login = () => {
 
     if (!validator.isEmail(email)) {
       setError('Please enter a valid email address');
+      return;
     }
 
     try {
@@ -45,7 +46,7 @@ const Login = () => {
 
   return (
     <div className="bg-cover bg-center w-screen h-screen flex items-center justify-center" style={{ backgroundImage: `url("../public/background.jpg")` }}>
-      <div className="w-full max-w-md rounded-lg overflow-hidden p-2 shadow-lg backdrop-blur-3xl">
+      <div className="w-full max-w-sm rounded-lg overflow-hidden p-2 shadow-lg backdrop-blur-3xl">
         <div className='bg-transparent opacity-0.5 rounded-lg p-10'>
           <div className='flex justify-center items-center mb-6'>
             <img src="/logo.png" alt="Logo" className="w-full mr-2" />
