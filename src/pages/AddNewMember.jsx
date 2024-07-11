@@ -260,4 +260,4 @@ export default function AdminManagement() {
       </div>
     </div>
   );
-};
+}

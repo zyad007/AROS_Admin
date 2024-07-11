@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import MapGL, { Marker, Popup } from 'react-map-gl';
+import MapGL, { Marker } from 'react-map-gl';
 import maplibregl from 'maplibre-gl';
 
 const MAPTILER = 'https://api.maptiler.com/maps/streets/style.json?key=ZFtcxc8UpIJArb56xQlZ';
@@ -13,6 +13,18 @@ export default function LiveLocationMap({ location }) {
     pitch: 0,
   });
 
+  useEffect(() => {
+    console.log('Location:', location);
+  }, []);
+
+  useEffect(() => {
+    setViewport((vp) => ({
+      ...vp,
+      latitude: location.lat,
+      longitude: location.lng,
+    }));
+  }, [location]);
+
   return (
     <MapGL
       {...viewport}
@@ -22,11 +34,7 @@ export default function LiveLocationMap({ location }) {
       mapLib={maplibregl}
       onViewportChange={(nextViewport) => setViewport(nextViewport)}
     >
-      <Marker
-        longitude={location.lng}
-        latitude={location.lat}
-        color="red"
-      />
+      <Marker longitude={location.lng} latitude={location.lat} color="red" />
     </MapGL>
   );
-};
+}
