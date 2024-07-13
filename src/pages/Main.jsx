@@ -1,9 +1,7 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Map from '../components/Map';
 import List from '../components/List';
-import 'maplibre-gl/dist/maplibre-gl.css';
-import { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import { useNavigate } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
@@ -48,25 +46,26 @@ export default function Main() {
   const [view, setView] = useState('map');
   const [sortBy, setSortBy] = useState('latest');
   const [popupInfo, setPopupInfo] = useState(null);
+  const [obstacles, setObstacles] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/');
-    } else {
-      console.log('Token:', token);
-      // axios.get('https://aros-server-new.onrender.com/obstacle', {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`
-      //   }
-      // })
-      //   .then(response => {
-      //     console.log('Obstacle data:', response.data);
-      //   })
-      //   .catch(error => {
-      //     console.error('Error fetching obstacle data:', error);
-      //   });
-    }
+    const fetchObstacles = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          navigate('/');
+          return;
+        }
+        // const response = await axios.get('https://aros-server-new.onrender.com/obstacle');
+        // const fetchedObstacles = response.data.data;
+        // setObstacles(fetchedObstacles);
+        // console.log('Fetched Obstacles:', fetchedObstacles);
+      } catch (error) {
+        console.error('Error fetching obstacle data:', error);
+      }
+    };
+
+    fetchObstacles();
   }, [navigate]);
 
   const switchToMapView = () => {
@@ -146,4 +145,4 @@ export default function Main() {
       </div>
     </div>
   );
-};
+}

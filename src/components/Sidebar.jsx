@@ -6,7 +6,7 @@ export default function Sidebar() {
 
   const sidebarLinks = [
     { path: '/home', content: 'Obstacles View', icon: '/icons/obstacles.png' },
-    { path: '/heat-map', content: 'Heat Map', icon: '/icons/heatmap.png' },
+    // { path: '/heat-map', content: 'Heat Map', icon: '/icons/heatmap.png' },
     { path: '/user-tracking', content: 'User Tracking', icon: '/icons/user_tracking.png' },
     { path: '/admin-management', content: 'Admin Management', icon: '/icons/admin.png' },
     { path: '/add-obstacle', content: 'Add Obstacle', icon: '/icons/add_obstacle.png' },
