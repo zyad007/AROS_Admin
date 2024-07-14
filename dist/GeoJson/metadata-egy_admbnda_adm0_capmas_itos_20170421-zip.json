@@ -1,0 +1,15 @@
+{
+    "created": "2017-08-14T15:05:36.789791",
+    "description": "Egypt administrative level 0 (national) boundary polygon shapefile.",
+    "format": "SHP",
+    "download_url": "https://data.humdata.org/dataset/b90d81ba-7c7a-4283-9899-827480d80a79/resource/5840f6d2-0cbc-4f94-9d51-d89eed1ecc0a/download/egy_admbnda_adm0_capmas_itos_20170421.zip",
+    "id": "5840f6d2-0cbc-4f94-9d51-d89eed1ecc0a",
+    "last_modified": "2017-08-14T15:05:36.622054",
+    "metadata_modified": "2023-11-08T22:08:01.389031",
+    "microdata": false,
+    "dataset_id": "b90d81ba-7c7a-4283-9899-827480d80a79",
+    "resource_type": "file.upload",
+    "name": "egy_admbnda_adm0_capmas_itos_20170421.zip",
+    "mimetype": null,
+    "size": "1.3M"
+}
