@@ -57,9 +57,9 @@ export default function Map({ obstacles, setPopupInfo, popupInfo }) {
       onViewportChange={viewport => setMap(viewport)}
     >
       {obstacles.map((obstacle, index) => (
-        <Marker key={index} latitude={obstacle.lat} longitude={obstacle.lon}>
+        <Marker key={index} latitude={obstacle.lat} longitude={obstacle.lng}>
           <img
-            src={`Road icons/${obstacle.type}.png`}
+            src={`Road icons/accident.png`}
             alt={obstacle.type}
             className='w-6 h-6 rounded-full'
             onMouseEnter={() => setPopupInfo(obstacle)}
@@ -70,13 +70,12 @@ export default function Map({ obstacles, setPopupInfo, popupInfo }) {
       {popupInfo && (
         <Popup
           latitude={popupInfo.lat}
-          longitude={popupInfo.lon}
+          longitude={popupInfo.lng}
           onClose={() => setPopupInfo(null)}
         >
           <div>
             <h3>{popupInfo.type}</h3>
-            <img src={popupInfo.imageURL} alt={popupInfo.type} className='w-32 h-auto' />
-            <p>{popupInfo.description}</p>
+            <img src={popupInfo.imageUrl} alt={popupInfo.type} className='w-32 h-auto' />
           </div>
         </Popup>
       )}

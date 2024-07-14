@@ -19,16 +19,16 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/login', {
+      const response = await axios.post('https://aros-server-new.onrender.com/admin/login', {
         email,
         password
       });
 
-      const { user, token } = response.data;
-
+      const result = response.data.data;
+      console.log(result)
       // Save the userData & token in local storage
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', result.token);
+      // localStorage.setItem('user', JSON.stringify(user));
 
       navigate('/home');
     } catch (error) {
